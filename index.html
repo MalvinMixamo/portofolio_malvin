@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MALVIN PRADHYPTA EKA SAPUTRA — Fullstack Developer</title>
+  
+  <!-- Google Fonts: Space Grotesk, IBM Plex Mono, Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Space Grotesk"', 'sans-serif'],
+            mono: ['"IBM Plex Mono"', 'monospace'],
+            sans: ['"Inter"', 'sans-serif'],
+          },
+          colors: {
+            paper: '#F4F3EF',
+            ink: '#111111',
+            obsidian: '#0D0D0D',
+            accent: '#FF3B00', // 1 Warna Aksen Menyimpang (International Safety Orange)
+          },
+          borderRadius: {
+            none: '0px',
+            DEFAULT: '0px',
+            sm: '0px',
+            md: '0px',
+            lg: '0px',
+            xl: '0px',
+            full: '0px',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Strict Brutalist Reset: Zero Gradients, Zero Rounded Corners */
+    *, *::before, *::after {
+      border-radius: 0px !important;
+      background-image: none !important;
+    }
+
+    :root {
+      --bg-color: #F4F3EF;
+      --fg-color: #111111;
+      --accent-color: #FF3B00;
+    }
+
+    html.dark {
+      --bg-color: #0D0D0D;
+      --fg-color: #F4F3EF;
+      --accent-color: #FF3B00;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--fg-color);
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.15s steps(2), color 0.15s steps(2);
+      overflow-x: hidden;
+    }
+
+    /* Hard Brutalist Offset Shadows */
+    .brutal-shadow {
+      box-shadow: 4px 4px 0px var(--fg-color);
+      transition: transform 0.1s ease, box-shadow 0.1s ease, background-color 0.1s ease, color 0.1s ease;
+    }
+
+    .brutal-shadow:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 6px 6px 0px var(--fg-color);
+    }
+
+    .brutal-shadow:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--fg-color);
+    }
+
+    .brutal-shadow-accent {
+      box-shadow: 5px 5px 0px var(--accent-color);
+    }
+
+    /* Custom Selection */
+    ::selection {
+      background-color: #FF3B00;
+      color: #F4F3EF;
+    }
+
+    /* Architectural Crosshair Grid Pattern (Flat 1px lines, zero gradients) */
+    .grid-cell-hover:hover {
+      background-color: #FF3B00;
+      color: #F4F3EF;
+    }
+
+    /* Hide default file input */
+    input[type="file"] {
+      display: none;
+    }
+
+    .grain{
+        opacity: 0.45;
+        pointer-events: none;
+        z-index: -1;
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        mix-blend-mode: soft-light;
+    }
+  </style>
+</head>
+<body class="antialiased selection:bg-accent selection:text-paper">
+
+  <!-- TOP UTILITY NAVIGATION BAR -->
+  <header class="sticky top-0 z-40 border-b-2 border-ink dark:border-paper bg-paper dark:bg-obsidian">
+    <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between">
+      <!-- Brand / System Index -->
+      <a href="#top" class="px-4 py-3.5 font-mono text-xs sm:text-sm font-bold tracking-tight uppercase border-r-2 border-ink dark:border-paper flex items-center gap-2.5 hover:bg-accent hover:text-paper transition-colors">
+        <span class="inline-block w-2.5 h-2.5 bg-accent"></span>
+        <span>MALVIN.DEV // V.26</span>
+      </a>
+
+      <!-- Desktop Anchor Nav -->
+      <nav class="hidden lg:flex items-center font-mono text-xs font-semibold uppercase tracking-wider">
+        <a href="#tentang" class="px-4 py-4 border-r border-ink/20 dark:border-paper/20 hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-colors">[01] TENTANG</a>
+        <a href="#stack" class="px-4 py-4 border-r border-ink/20 dark:border-paper/20 hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-colors">[02] TECH STACK</a>
+        <a href="#proyek" class="px-4 py-4 border-r border-ink/20 dark:border-paper/20 hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-colors">[03] PROYEK</a>
+        <a href="#pengalaman" class="px-4 py-4 border-r border-ink/20 dark:border-paper/20 hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-colors">[04] PENGALAMAN</a>
+        <a href="#kontak" class="px-4 py-4 hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink transition-colors">[05] KONTAK</a>
+      </nav>
+
+      <!-- Utility Controls: Dark Mode & Mobile Menu -->
+      <div class="flex items-center">
+        <button 
+          id="theme-toggle" 
+          type="button"
+          aria-label="Ubah Tema Gelap atau Terang"
+          class="px-4 py-3.5 font-mono text-xs font-bold uppercase border-l-2 border-ink dark:border-paper bg-paper dark:bg-obsidian hover:bg-accent hover:text-paper transition-colors flex items-center gap-2 cursor-pointer"
+        >
+          <span id="theme-indicator" class="inline-block w-2.5 h-2.5 border border-current bg-ink dark:bg-paper"></span>
+          <span id="theme-label">TERANG</span>
+        </button>
+
+        <button 
+          id="mobile-menu-btn" 
+          type="button"
+          aria-label="Buka Navigasi"
+          class="lg:hidden px-4 py-3.5 font-mono text-xs font-bold uppercase border-l-2 border-ink dark:border-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink cursor-pointer"
+        >
+          MENU [+]
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Dropdown Navigation -->
+    <div id="mobile-nav" class="hidden lg:hidden border-t-2 border-ink dark:border-paper bg-paper dark:bg-obsidian font-mono text-xs font-bold uppercase">
+      <div class="grid grid-cols-2 sm:grid-cols-5">
+        <a href="#tentang" class="mobile-link p-3.5 border-b border-r border-ink dark:border-paper hover:bg-accent hover:text-paper">[01] TENTANG</a>
+        <a href="#stack" class="mobile-link p-3.5 border-b sm:border-r border-ink dark:border-paper hover:bg-accent hover:text-paper">[02] TECH STACK</a>
+        <a href="#proyek" class="mobile-link p-3.5 border-b border-r border-ink dark:border-paper hover:bg-accent hover:text-paper">[03] PROYEK</a>
+        <a href="#pengalaman" class="mobile-link p-3.5 border-b sm:border-r border-ink dark:border-paper hover:bg-accent hover:text-paper">[04] PENGALAMAN</a>
+        <a href="#kontak" class="mobile-link p-3.5 col-span-2 sm:col-span-1 hover:bg-accent hover:text-paper">[05] KONTAK</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top" class="max-w-7xl mx-auto border-x-2 border-ink dark:border-paper">
+    <img class="grain h-sreen" src="./grain.png" aria-hidden="true" />
+    <!-- HERO SECTION: ASYMMETRIC BRUTALIST GRID -->
+    <section class="grid grid-cols-1 lg:grid-cols-12 border-b-2 border-ink dark:border-paper">
+      
+      <!-- Left Column: Identity & Statement (8 Cols) -->
+      <div class="lg:col-span-8 flex flex-col justify-between border-b-2 lg:border-b-0 lg:border-r-2 border-ink dark:border-paper">
+        
+        <!-- Top Metadata Bar -->
+        <div class="flex flex-wrap items-center justify-between gap-2 px-5 sm:px-8 py-3 border-b-2 border-ink dark:border-paper font-mono text-xs uppercase tracking-wider">
+          <div class="flex items-center gap-2 font-bold">
+            <span class="bg-accent text-paper px-2 py-0.5">STATUS: AKTIF</span>
+            <span>// FULLSTACK DEVELOPER</span>
+          </div>
+          <span class="opacity-75">LOKASI: INDONESIA [ID]</span>
+        </div>
+
+        <!-- Main Display Typography -->
+        <div class="p-5 sm:p-8 lg:p-12 my-auto">
+          <p class="font-mono text-xs sm:text-sm uppercase tracking-widest mb-4 font-semibold text-accent">
+            &gt; IDENTITAS_PENGEMBANG
+          </p>
+          <h1 class="font-display text-4xl sm:text-6xl xl:text-7xl font-bold uppercase tracking-tight leading-[0.95] mb-6">
+            MALVIN<br />
+            PRADHYPTA<br />
+            <span class="inline-block bg-ink text-paper dark:bg-paper dark:text-ink px-2 py-1 mt-1">EKA SAPUTRA</span>
+          </h1>
+          <p class="text-base sm:text-lg max-w-2xl leading-relaxed font-normal border-l-4 border-accent pl-4 py-1">
+            Fullstack Developer yang merancang dan membangun sistem web berperforma tinggi, arsitektur API yang bersih, serta antarmuka frontend yang presisi dan fungsional.
+          </p>
+
+          <!-- Direct Action Buttons -->
+          <div class="flex flex-wrap items-center gap-4 mt-8">
+            <a href="#proyek" class="px-6 py-3.5 bg-accent text-paper font-mono text-xs sm:text-sm font-bold uppercase tracking-wider border-2 border-ink dark:border-paper brutal-shadow">
+              LIHAT ARSIP PROYEK [03] &rarr;
+            </a>
+            <a href="#kontak" class="px-6 py-3.5 bg-paper dark:bg-obsidian text-ink dark:text-paper font-mono text-xs sm:text-sm font-bold uppercase tracking-wider border-2 border-ink dark:border-paper brutal-shadow">
+              HUBUNGI SAYA
+            </a>
+          </div>
+        </div>
+
+        <!-- Bottom Spec Strip -->
+        <div class="grid grid-cols-3 border-t-2 border-ink dark:border-paper font-mono text-xs">
+          <div class="p-4 border-r-2 border-ink dark:border-paper">
+            <span class="block opacity-60 uppercase">FOKUS UTAMA</span>
+            <span class="font-bold uppercase mt-1 block">END-TO-END WEB</span>
+          </div>
+          <div class="p-4 border-r-2 border-ink dark:border-paper">
+            <span class="block opacity-60 uppercase">CORE STACK</span>
+            <span class="font-bold uppercase mt-1 block">7 TEKNOLOGI INTI</span>
+          </div>
+          <div class="p-4">
+            <span class="block opacity-60 uppercase">ARSITEKTUR</span>
+            <span class="font-bold uppercase mt-1 block">API &amp; UI SOLID</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Dedicated Profile Photo Frame (4 Cols) -->
+      <div class="lg:col-span-4 flex flex-col justify-between bg-paper dark:bg-obsidian">
+        <!-- Frame Header -->
+        <div class="flex items-center justify-between px-4 py-3 border-b-2 border-ink dark:border-paper font-mono text-xs font-bold uppercase">
+          <span>[FIG.00] FOTO PROFIL</span>
+          <span class="text-accent">RASIO 4:5</span>
+        </div>
+
+        <!-- Photo Container -->
+        <div class="p-5 sm:p-6 flex-1 flex flex-col justify-center">
+          <div class="relative w-full aspect-[4/5] border-2 border-ink dark:border-paper bg-paper dark:bg-obsidian brutal-shadow-accent overflow-hidden group">
+            
+            <!-- Technical Corner Registration Marks -->
+            <div class="absolute top-2 left-2 z-10 font-mono text-[10px] font-bold bg-paper dark:bg-obsidian px-1.5 py-0.5 border border-ink dark:border-paper">
+              + SUBJEK_01
+            </div>
+            <div class="absolute bottom-2 right-2 z-10 font-mono text-[10px] font-bold bg-accent text-paper px-1.5 py-0.5">
+              MPES // DEV
+            </div>
+
+            <!-- Uploaded Image Preview (Hidden until user uploads or sets src) -->
+            <img 
+              id="profile-photo-img" 
+              src="./profil.jpg" 
+              alt="Foto Profil Malvin Pradhypta Eka Saputra" 
+              class="w-full h-full object-cover md:grayscale contrast-125 hover:grayscale-0 transition-all duration-200"
+            />
+
+            <!-- Default Architectural Wireframe Placeholder (100% Flat SVG, Zero Gradients) -->
+            <div id="profile-photo-placeholder" class="w-full h-full flex flex-col items-center justify-between p-6 text-center select-none">
+              <div class="w-full flex justify-between font-mono text-[10px] opacity-60 pt-5">
+                <span>X: 000</span>
+                <span>Y: 000</span>
+              </div>
+
+              <!-- Minimalist Geometric Portrait Frame SVG -->
+              <div class="my-auto flex flex-col items-center">
+                <svg class="w-32 h-32 stroke-ink dark:stroke-paper" viewBox="0 0 120 120" fill="none" stroke-width="2">
+                  <rect x="10" y="10" width="100" height="100" />
+                  <line x1="10" y1="10" x2="110" y2="110" stroke-dasharray="4 4" />
+                  <line x1="110" y1="10" x2="10" y2="110" stroke-dasharray="4 4" />
+                  <!-- Minimalist Geometric Head & Shoulders -->
+                  <rect x="44" y="32" width="32" height="32" fill="#FF3B00" stroke="currentColor" stroke-width="2" />
+                  <path d="M26 110 V86 H94 V110" fill="none" stroke="currentColor" stroke-width="2" />
+                </svg>
+                <p class="font-mono text-xs font-bold uppercase mt-4 tracking-wider">
+                  SLOT FOTO TERSEDIA
+                </p>
+                <p class="font-mono text-[11px] opacity-75 mt-1 max-w-[210px]">
+                  Unggah foto Anda di bawah untuk pratinjau langsung, atau ganti atribut <code class="underline">src</code> pada kode HTML.
+                </p>
+              </div>
+
+              <div class="w-full border-t border-ink/30 dark:border-paper/30 pt-2 font-mono text-[10px] uppercase opacity-70">
+                FORMAT: JPG / PNG / WEBP
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION [01]: TENTANG SAYA -->
+    <section id="tentang" class="grid grid-cols-1 lg:grid-cols-12 border-b-2 border-ink dark:border-paper">
+      <div class="lg:col-span-4 p-5 sm:p-8 border-b-2 lg:border-b-0 lg:border-r-2 border-ink dark:border-paper flex flex-col justify-between">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase text-accent block mb-2">[01] PROFIL RINGKAS</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight">TENTANG SAYA</h2>
+        </div>
+        <div class="mt-6 pt-4 border-t border-ink/30 dark:border-paper/30 font-mono text-xs uppercase space-y-1">
+          <p><span class="opacity-60">NAMA:</span> MALVIN PRADHYPTA EKA SAPUTRA</p>
+          <p><span class="opacity-60">PERAN:</span> FULLSTACK DEVELOPER</p>
+          <p><span class="opacity-60">PENDEKATAN:</span> CLEAN, FAST, SCALABLE</p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-8 p-5 sm:p-8 lg:p-10 flex flex-col justify-center space-y-5 text-base sm:text-lg leading-relaxed">
+        <p class="font-medium">
+          Halo, saya <strong class="font-bold underline decoration-accent decoration-2 underline-offset-4">Malvin Pradhypta Eka Saputra</strong>. Saya adalah seorang <strong>Fullstack Developer</strong> yang berfokus pada pengembangan aplikasi web modern secara menyeluruh—mulai dari perancangan skema basis data, pengembangan RESTful API berlatensi rendah, hingga implementasi antarmuka pengguna yang responsif dan terstruktur.
+        </p>
+        <p class="opacity-90">
+          Dalam setiap proyek, saya mengutamakan kode yang mudah dipelihara, efisiensi performa di sisi server maupun klien, serta kolaborasi versi yang disiplin. Saya terbiasa bekerja lintas ekosistem JavaScript/TypeScript dan PHP untuk menyesuaikan arsitektur teknologi terbaik sesuai kebutuhan bisnis maupun skala produk.
+        </p>
+      </div>
+    </section>
+
+    <!-- SECTION [02]: TECH STACK MATRIX -->
+    <section id="stack" class="border-b-2 border-ink dark:border-paper">
+      <!-- Section Header -->
+      <div class="flex flex-wrap items-center justify-between gap-4 px-5 sm:px-8 py-5 border-b-2 border-ink dark:border-paper">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase text-accent block mb-1">[02] SPESIFIKASI TEKNIS</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight">TECH STACK UTAMA</h2>
+        </div>
+        <span class="font-mono text-xs uppercase px-3 py-1.5 border-2 border-ink dark:border-paper font-bold">
+          TOTAL: 07 TEKNOLOGI INTI
+        </span>
+      </div>
+
+      <!-- Brutalist Tech Stack Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+        
+        <!-- 01: REACT -->
+        <div class="p-6 border-b-2 sm:border-r-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">01 // FRONTEND</span>
+            <span class="px-2 py-0.5 border border-current uppercase">UI LIBRARY</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">REACT</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Pengembangan komponen UI modular, state management kompleks, dan aplikasi single-page interaktif.
+          </p>
+        </div>
+
+        <!-- 02: NEXT.JS -->
+        <div class="p-6 border-b-2 lg:border-r-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">02 // FULLSTACK</span>
+            <span class="px-2 py-0.5 border border-current uppercase">SSR / SSG</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">NEXT.JS</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Server-side rendering, App Router, optimasi SEO tingkat lanjut, dan API routes terintegrasi.
+          </p>
+        </div>
+
+        <!-- 03: VUE -->
+        <div class="p-6 border-b-2 sm:border-r-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">03 // FRONTEND</span>
+            <span class="px-2 py-0.5 border border-current uppercase">FRAMEWORK</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">VUE</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Arsitektur reaktif berbasis Composition API untuk dasbor operasional dan sistem internal yang cepat.
+          </p>
+        </div>
+
+        <!-- 04: VITE -->
+        <div class="p-6 border-b-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">04 // BUILD TOOL</span>
+            <span class="px-2 py-0.5 border border-current uppercase">BUNDLER</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">VITE</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Hot Module Replacement (HMR) instan dan bundling produksi optimal untuk aplikasi modern.
+          </p>
+        </div>
+
+        <!-- 05: LARAVEL -->
+        <div class="p-6 border-b-2 lg:border-b-0 sm:border-r-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">05 // BACKEND</span>
+            <span class="px-2 py-0.5 border border-current uppercase">PHP ECOSYSTEM</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">LARAVEL</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Arsitektur MVC tangguh, Eloquent ORM, autentikasi, queue worker, dan sistem enterprise berskala besar.
+          </p>
+        </div>
+
+        <!-- 06: HONO -->
+        <div class="p-6 border-b-2 lg:border-b-0 lg:border-r-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">06 // BACKEND / EDGE</span>
+            <span class="px-2 py-0.5 border border-current uppercase">ULTRA-FAST API</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">HONO</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Web framework super ringan dan cepat berbasis Web Standards untuk REST API modern dan edge runtime.
+          </p>
+        </div>
+
+        <!-- 07: GIT -->
+        <div class="p-6 border-b-2 sm:border-b-0 sm:border-r-2 border-ink dark:border-paper grid-cell-hover transition-colors group">
+          <div class="flex justify-between items-center font-mono text-xs mb-6">
+            <span class="font-bold">07 // WORKFLOW</span>
+            <span class="px-2 py-0.5 border border-current uppercase">VERSION CONTROL</span>
+          </div>
+          <h3 class="font-display text-3xl font-bold uppercase mb-2">GIT</h3>
+          <p class="text-sm opacity-85 group-hover:opacity-100 leading-relaxed">
+            Manajemen branching terstruktur, code review, CI/CD workflow, dan kolaborasi tim lintas repositori.
+          </p>
+        </div>
+
+        <!-- 08: SUMMARY / ARCHITECTURE NOTE -->
+        <div class="p-6 bg-ink text-paper dark:bg-paper dark:text-ink flex flex-col justify-between">
+          <div class="font-mono text-xs uppercase text-accent font-bold">
+            // INTEGRASI FULLSTACK
+          </div>
+          <p class="font-mono text-xs sm:text-sm leading-relaxed my-4">
+            Kombinasi Frontend reaktif (React, Next.js, Vue, Vite) + Backend solid (Laravel, Hono) + kontrol versi ketat (Git).
+          </p>
+          <div class="font-mono text-[11px] uppercase opacity-75">
+            SIAP UNTUK PRODUKSI &rarr;
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION [03]: PROYEK PILIHAN -->
+    <section id="proyek" class="border-b-2 border-ink dark:border-paper">
+      <!-- Header & Interactive Filter Controls -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 px-5 sm:px-8 py-6 border-b-2 border-ink dark:border-paper">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase text-accent block mb-1">[03] KARYA &amp; IMPLEMENTASI</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight">PROYEK PILIHAN</h2>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="flex flex-wrap gap-2 font-mono text-xs font-bold uppercase" id="project-filters">
+          <button type="button" data-filter="all" class="filter-btn active px-3.5 py-2 border-2 border-ink dark:border-paper bg-accent text-paper cursor-pointer">
+            SEMUA [04]
+          </button>
+          <button type="button" data-filter="react-next" class="filter-btn px-3.5 py-2 border-2 border-ink dark:border-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink cursor-pointer">
+            REACT / NEXT
+          </button>
+          <button type="button" data-filter="vue" class="filter-btn px-3.5 py-2 border-2 border-ink dark:border-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink cursor-pointer">
+            VUE
+          </button>
+          <button type="button" data-filter="backend" class="filter-btn px-3.5 py-2 border-2 border-ink dark:border-paper hover:bg-ink hover:text-paper dark:hover:bg-paper dark:hover:text-ink cursor-pointer">
+            LARAVEL / HONO
+          </button>
+        </div>
+      </div>
+
+      <!-- Projects Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2" id="projects-grid">
+        
+        <!-- PROJECT 001 -->
+        <article data-category="react-next backend" class="project-card p-6 sm:p-8 border-b-2 md:border-r-2 border-ink dark:border-paper flex flex-col justify-between">
+          <div>
+            <!-- Top Row -->
+            <div class="flex items-center justify-between font-mono text-xs font-bold uppercase mb-4">
+              <span class="px-2 py-0.5 bg-ink text-paper dark:bg-paper dark:text-ink">PROYEK // 001</span>
+              <span>TAHUN: 2026</span>
+            </div>
+
+            <!-- Architectural Wireframe Diagram (100% Flat SVG, Zero Gradients) -->
+            <div class="w-full h-44 border-2 border-ink dark:border-paper mb-6 p-4 flex flex-col justify-between bg-paper dark:bg-obsidian">
+              <div class="flex justify-between items-center font-mono text-[10px] uppercase border-b border-ink/30 dark:border-paper/30 pb-2">
+                <span>ARCH: EDGE_API + SPA</span>
+                <span class="text-accent font-bold">LATENCY &lt; 18MS</span>
+              </div>
+              <svg class="w-full h-20 stroke-ink dark:stroke-paper" viewBox="0 0 320 70" fill="none" stroke-width="2">
+                <rect x="8" y="15" width="76" height="40" />
+                <text x="46" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">REACT+VITE</text>
+                <line x1="84" y1="35" x2="122" y2="35" />
+                <polygon points="122,31 130,35 122,39" fill="#FF3B00" stroke="none" />
+                <rect x="130" y="15" width="76" height="40" fill="#FF3B00" stroke="currentColor" />
+                <text x="168" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#F4F3EF" stroke="none">HONO API</text>
+                <line x1="206" y1="35" x2="236" y2="35" />
+                <rect x="236" y="15" width="76" height="40" />
+                <text x="274" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">POSTGRES</text>
+              </svg>
+              <div class="font-mono text-[10px] uppercase opacity-70 flex justify-between">
+                <span>MODUL: REALTIME TELEMETRY</span>
+                <span>STATUS: PRODUKSI</span>
+              </div>
+            </div>
+
+            <h3 class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-3">
+              KINETIC PULSE — API GATEWAY &amp; ANALYTICS MONITOR
+            </h3>
+            <p class="text-sm sm:text-base opacity-90 leading-relaxed mb-6">
+              Platform pemantauan trafik API real-time berlatensi rendah. Dibangun menggunakan Hono sebagai engine backend ultra-cepat dan React + Vite untuk visualisasi log secara langsung.
+            </p>
+          </div>
+
+          <div>
+            <!-- Tech Tags -->
+            <div class="flex flex-wrap gap-2 font-mono text-xs font-semibold uppercase mb-6">
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">HONO</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">REACT</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">VITE</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">GIT</span>
+            </div>
+
+            <button 
+              type="button"
+              onclick="openProjectModal(0)"
+              class="w-full sm:w-auto px-5 py-3 bg-ink text-paper dark:bg-paper dark:text-ink font-mono text-xs font-bold uppercase tracking-wider border-2 border-ink dark:border-paper hover:bg-accent hover:text-paper hover:border-accent transition-colors cursor-pointer"
+            >
+              INSPEKSI ARSITEKTUR &rarr;
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 002 -->
+        <article data-category="vue backend" class="project-card p-6 sm:p-8 border-b-2 border-ink dark:border-paper flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs font-bold uppercase mb-4">
+              <span class="px-2 py-0.5 bg-ink text-paper dark:bg-paper dark:text-ink">PROYEK // 002</span>
+              <span>TAHUN: 2025</span>
+            </div>
+
+            <!-- Architectural Wireframe Diagram -->
+            <div class="w-full h-44 border-2 border-ink dark:border-paper mb-6 p-4 flex flex-col justify-between bg-paper dark:bg-obsidian">
+              <div class="flex justify-between items-center font-mono text-[10px] uppercase border-b border-ink/30 dark:border-paper/30 pb-2">
+                <span>ARCH: MONOLITH_MODULAR</span>
+                <span class="text-accent font-bold">MULTI-GUDANG</span>
+              </div>
+              <svg class="w-full h-20 stroke-ink dark:stroke-paper" viewBox="0 0 320 70" fill="none" stroke-width="2">
+                <rect x="8" y="15" width="84" height="40" />
+                <text x="50" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">VUE 3 CLIENT</text>
+                <line x1="92" y1="35" x2="126" y2="35" />
+                <rect x="126" y="15" width="86" height="40" fill="#FF3B00" stroke="currentColor" />
+                <text x="169" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#F4F3EF" stroke="none">LARAVEL 11</text>
+                <line x1="212" y1="35" x2="240" y2="35" />
+                <rect x="240" y="15" width="72" height="40" />
+                <text x="276" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">REDIS/DB</text>
+              </svg>
+              <div class="font-mono text-[10px] uppercase opacity-70 flex justify-between">
+                <span>MODUL: INVENTORY &amp; ERP</span>
+                <span>STATUS: PRODUKSI</span>
+              </div>
+            </div>
+
+            <h3 class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-3">
+              LOGISTIK CORE — SISTEM ERP &amp; MANAJEMEN INVENTARIS
+            </h3>
+            <p class="text-sm sm:text-base opacity-90 leading-relaxed mb-6">
+              Sistem perencanaan sumber daya perusahaan dan pelacakan stok multi-cabang. Menggabungkan keandalan backend Laravel dengan antarmuka reaktif berbasis Vue dan Vite.
+            </p>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap gap-2 font-mono text-xs font-semibold uppercase mb-6">
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">LARAVEL</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">VUE</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">VITE</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">GIT</span>
+            </div>
+
+            <button 
+              type="button"
+              onclick="openProjectModal(1)"
+              class="w-full sm:w-auto px-5 py-3 bg-ink text-paper dark:bg-paper dark:text-ink font-mono text-xs font-bold uppercase tracking-wider border-2 border-ink dark:border-paper hover:bg-accent hover:text-paper hover:border-accent transition-colors cursor-pointer"
+            >
+              INSPEKSI ARSITEKTUR &rarr;
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 003 -->
+        <article data-category="react-next" class="project-card p-6 sm:p-8 border-b-2 md:border-b-0 md:border-r-2 border-ink dark:border-paper flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs font-bold uppercase mb-4">
+              <span class="px-2 py-0.5 bg-ink text-paper dark:bg-paper dark:text-ink">PROYEK // 003</span>
+              <span>TAHUN: 2025</span>
+            </div>
+
+            <!-- Architectural Wireframe Diagram -->
+            <div class="w-full h-44 border-2 border-ink dark:border-paper mb-6 p-4 flex flex-col justify-between bg-paper dark:bg-obsidian">
+              <div class="flex justify-between items-center font-mono text-[10px] uppercase border-b border-ink/30 dark:border-paper/30 pb-2">
+                <span>ARCH: FULLSTACK_SSR</span>
+                <span class="text-accent font-bold">CORE WEB VITALS 99</span>
+              </div>
+              <svg class="w-full h-20 stroke-ink dark:stroke-paper" viewBox="0 0 320 70" fill="none" stroke-width="2">
+                <rect x="8" y="15" width="94" height="40" fill="#FF3B00" stroke="currentColor" />
+                <text x="55" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#F4F3EF" stroke="none">NEXT.JS APP</text>
+                <line x1="102" y1="35" x2="136" y2="35" />
+                <rect x="136" y="15" width="84" height="40" />
+                <text x="178" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">SERVER ACT</text>
+                <line x1="220" y1="35" x2="246" y2="35" />
+                <rect x="246" y="15" width="66" height="40" />
+                <text x="279" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">PRISMA</text>
+              </svg>
+              <div class="font-mono text-[10px] uppercase opacity-70 flex justify-between">
+                <span>MODUL: B2B PROCUREMENT</span>
+                <span>STATUS: PRODUKSI</span>
+              </div>
+            </div>
+
+            <h3 class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-3">
+              NEXUS VENDOR — PORTAL PENGADAAN &amp; KATALOG B2B
+            </h3>
+            <p class="text-sm sm:text-base opacity-90 leading-relaxed mb-6">
+              Platform e-commerce B2B dengan rendering sisi server (SSR) menggunakan Next.js dan React untuk kecepatan indeksasi katalog ribuan SKU serta manajemen pesanan terotomasi.
+            </p>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap gap-2 font-mono text-xs font-semibold uppercase mb-6">
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">NEXT.JS</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">REACT</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">GIT</span>
+            </div>
+
+            <button 
+              type="button"
+              onclick="openProjectModal(2)"
+              class="w-full sm:w-auto px-5 py-3 bg-ink text-paper dark:bg-paper dark:text-ink font-mono text-xs font-bold uppercase tracking-wider border-2 border-ink dark:border-paper hover:bg-accent hover:text-paper hover:border-accent transition-colors cursor-pointer"
+            >
+              INSPEKSI ARSITEKTUR &rarr;
+            </button>
+          </div>
+        </article>
+
+        <!-- PROJECT 004 -->
+        <article data-category="vue backend" class="project-card p-6 sm:p-8 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between font-mono text-xs font-bold uppercase mb-4">
+              <span class="px-2 py-0.5 bg-ink text-paper dark:bg-paper dark:text-ink">PROYEK // 004</span>
+              <span>TAHUN: 2024</span>
+            </div>
+
+            <!-- Architectural Wireframe Diagram -->
+            <div class="w-full h-44 border-2 border-ink dark:border-paper mb-6 p-4 flex flex-col justify-between bg-paper dark:bg-obsidian">
+              <div class="flex justify-between items-center font-mono text-[10px] uppercase border-b border-ink/30 dark:border-paper/30 pb-2">
+                <span>ARCH: DECOUPLED_REST</span>
+                <span class="text-accent font-bold">RBAC SECURITY</span>
+              </div>
+              <svg class="w-full h-20 stroke-ink dark:stroke-paper" viewBox="0 0 320 70" fill="none" stroke-width="2">
+                <rect x="8" y="15" width="76" height="40" />
+                <text x="46" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">VUE ADMIN</text>
+                <line x1="84" y1="35" x2="116" y2="35" />
+                <rect x="116" y="15" width="88" height="40" fill="#FF3B00" stroke="currentColor" />
+                <text x="160" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="#F4F3EF" stroke="none">HONO + LARAVEL</text>
+                <line x1="204" y1="35" x2="236" y2="35" />
+                <rect x="236" y="15" width="76" height="40" />
+                <text x="274" y="39" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="10" fill="currentColor" stroke="none">WEBHOOKS</text>
+              </svg>
+              <div class="font-mono text-[10px] uppercase opacity-70 flex justify-between">
+                <span>MODUL: PAYMENT &amp; INVOICING</span>
+                <span>STATUS: PRODUKSI</span>
+              </div>
+            </div>
+
+            <h3 class="font-display text-2xl sm:text-3xl font-bold uppercase tracking-tight mb-3">
+              ARUS PAY — AUTOMASI TAGIHAN &amp; REKONSILIASI WEBHOOK
+            </h3>
+            <p class="text-sm sm:text-base opacity-90 leading-relaxed mb-6">
+              Layanan penagihan otomatis dengan worker antrean Laravel dan endpoint penerima webhook berkecepatan tinggi berbasis Hono, dilengkapi panel kontrol admin Vue.
+            </p>
+          </div>
+
+          <div>
+            <div class="flex flex-wrap gap-2 font-mono text-xs font-semibold uppercase mb-6">
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">LARAVEL</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">HONO</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">VUE</span>
+              <span class="px-2.5 py-1 border border-ink dark:border-paper">GIT</span>
+            </div>
+
+            <button 
+              type="button"
+              onclick="openProjectModal(3)"
+              class="w-full sm:w-auto px-5 py-3 bg-ink text-paper dark:bg-paper dark:text-ink font-mono text-xs font-bold uppercase tracking-wider border-2 border-ink dark:border-paper hover:bg-accent hover:text-paper hover:border-accent transition-colors cursor-pointer"
+            >
+              INSPEKSI ARSITEKTUR &rarr;
+            </button>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION [04]: PENGALAMAN (CHRONOLOGICAL LEDGER) -->
+    <section id="pengalaman" class="border-b-2 border-ink dark:border-paper">
+      <div class="px-5 sm:px-8 py-6 border-b-2 border-ink dark:border-paper flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase text-accent block mb-1">[04] REKAM JEJAK PROFESIONAL</span>
+          <h2 class="font-display text-3xl sm:text-4xl font-bold uppercase tracking-tight">PENGALAMAN KERJA</h2>
+        </div>
+        <span class="font-mono text-xs uppercase opacity-75">KRONOLOGI // TERBARU KE TERDAHULU</span>
+      </div>
+
+      <!-- Experience Ledger Rows -->
+      <div class="divide-y-2 divide-ink dark:divide-paper">
+        
+        <!-- Experience Row 1 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <div class="lg:col-span-3 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r-2 border-ink dark:border-paper font-mono text-xs">
+            <span class="inline-block bg-accent text-paper font-bold px-2 py-0.5 mb-2">2024 — SEKARANG</span>
+            <p class="font-bold uppercase text-sm">FULLSTACK DEVELOPER</p>
+            <p class="opacity-75 mt-1">STUDIO DIGITAL &amp; PRODUK SAAS</p>
+          </div>
+          <div class="lg:col-span-9 p-5 sm:p-6 flex flex-col justify-between">
+            <p class="text-sm sm:text-base leading-relaxed mb-4">
+              Memimpin pengembangan arsitektur end-to-end untuk aplikasi web klien dan produk internal. Merancang REST API berperforma tinggi menggunakan <strong>Hono</strong> dan <strong>Laravel</strong>, serta membangun antarmuka interaktif menggunakan <strong>React</strong>, <strong>Next.js</strong>, dan <strong>Vue</strong>.
+            </p>
+            <div class="flex flex-wrap gap-2 font-mono text-[11px] uppercase font-bold">
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">NEXT.JS</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">REACT</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">HONO</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">LARAVEL</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">GIT WORKFLOW</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience Row 2 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <div class="lg:col-span-3 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r-2 border-ink dark:border-paper font-mono text-xs">
+            <span class="inline-block border border-ink dark:border-paper font-bold px-2 py-0.5 mb-2">2023 — 2024</span>
+            <p class="font-bold uppercase text-sm">WEB APPLICATION DEVELOPER</p>
+            <p class="opacity-75 mt-1">SOLUSI SISTEM INFORMASI</p>
+          </div>
+          <div class="lg:col-span-9 p-5 sm:p-6 flex flex-col justify-between">
+            <p class="text-sm sm:text-base leading-relaxed mb-4">
+              Mengembangkan sistem manajemen operasional dan dasbor pelaporan bisnis berbasis <strong>Laravel</strong> dan <strong>Vue</strong> dengan bundler <strong>Vite</strong>. Mengoptimalkan kueri basis data serta menerapkan standar code review berbasis <strong>Git</strong> di dalam tim.
+            </p>
+            <div class="flex flex-wrap gap-2 font-mono text-[11px] uppercase font-bold">
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">LARAVEL</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">VUE</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">VITE</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">GIT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Experience Row 3 -->
+        <div class="grid grid-cols-1 lg:grid-cols-12">
+          <div class="lg:col-span-3 p-5 sm:p-6 border-b lg:border-b-0 lg:border-r-2 border-ink dark:border-paper font-mono text-xs">
+            <span class="inline-block border border-ink dark:border-paper font-bold px-2 py-0.5 mb-2">2022 — 2023</span>
+            <p class="font-bold uppercase text-sm">FRONTEND &amp; API ENGINEER</p>
+            <p class="opacity-75 mt-1">FREELANCE &amp; KOLABORASI PROYEK</p>
+          </div>
+          <div class="lg:col-span-9 p-5 sm:p-6 flex flex-col justify-between">
+            <p class="text-sm sm:text-base leading-relaxed mb-4">
+              Membangun berbagai landing page berkecepatan tinggi, sistem pemesanan online, dan integrasi API pihak ketiga menggunakan <strong>React</strong>, <strong>Vite</strong>, dan <strong>Laravel</strong> dengan fokus pada aksesibilitas dan responsivitas perangkat mobile.
+            </p>
+            <div class="flex flex-wrap gap-2 font-mono text-[11px] uppercase font-bold">
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">REACT</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">VITE</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">LARAVEL</span>
+              <span class="px-2 py-0.5 bg-ink/10 dark:bg-paper/10">GIT</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION [05]: KONTAK & FOOTER -->
+    <section id="kontak" class="grid grid-cols-1 lg:grid-cols-12">
+      <div class="lg:col-span-7 p-6 sm:p-10 border-b-2 lg:border-b-0 lg:border-r-2 border-ink dark:border-paper flex flex-col justify-between">
+        <div>
+          <span class="font-mono text-xs font-bold uppercase text-accent block mb-2">[05] INISIASI KOLABORASI</span>
+          <h2 class="font-display text-4xl sm:text-5xl font-bold uppercase tracking-tight leading-none mb-4">
+            MARI BANGUN SISTEM YANG SOLID.
+          </h2>
+          <p class="text-base opacity-90 max-w-xl leading-relaxed">
+            Terbuka untuk diskusi proyek fullstack, pengembangan aplikasi web kustom, atau peluang kolaborasi teknis.
+          </p>
+        </div>
+
+        <div class="mt-8">
+          <span class="font-mono text-xs uppercase opacity-70 block mb-2">ALAMAT SUREL LANGSUNG:</span>
+          <div class="flex flex-wrap items-stretch gap-3">
+            <div id="email-text" class="px-4 py-3 border-2 border-ink dark:border-paper font-mono text-sm sm:text-base font-bold select-all">
+              malvin.pradhypta@dev.id
+            </div>
+            <button 
+              id="copy-email-btn" 
+              type="button"
+              class="px-5 py-3 bg-accent text-paper font-mono text-xs sm:text-sm font-bold uppercase border-2 border-ink dark:border-paper brutal-shadow cursor-pointer"
+            >
+              SALIN EMAIL
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Social Links & Back to Top -->
+      <div class="lg:col-span-5 flex flex-col justify-between">
+        <div class="divide-y-2 divide-ink dark:divide-paper font-mono text-sm font-bold uppercase">
+          <a href="https://github.com/MalvinMixamo" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 sm:p-6 hover:bg-accent hover:text-paper transition-colors">
+            <span>01 // GITHUB REPOSITORY</span>
+            <span>&nearr;</span>
+          </a>
+          <a href="https://www.linkedin.com/in/malvin-pradhypta-eka-saputra-606b95325/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 sm:p-6 hover:bg-accent hover:text-paper transition-colors">
+            <span>02 // LINKEDIN PROFILE</span>
+            <span>&nearr;</span>
+          </a>
+          <a href="https://www.instagram.com/kipin.kipon/" target="_blank" rel="noopener noreferrer" class="flex items-center justify-between p-5 sm:p-6 hover:bg-accent hover:text-paper transition-colors">
+            <span>03 // INSTAGRAM PROFILE</span>
+            <span>&nearr;</span>
+          </a>
+          <a href="#top" class="flex items-center justify-between p-5 sm:p-6 bg-ink text-paper dark:bg-paper dark:text-ink hover:bg-accent hover:text-paper dark:hover:bg-accent dark:hover:text-paper transition-colors">
+            <span>KEMBALI KE ATAS [TOP]</span>
+            <span>&uarr;</span>
+          </a>
+        </div>
+
+        <div class="p-5 sm:p-6 border-t-2 border-ink dark:border-paper font-mono text-xs flex flex-wrap justify-between gap-2 opacity-80">
+          <span>&copy; 2026 MALVIN PRADHYPTA EKA SAPUTRA</span>
+          <span>BRUTALIST MINIMALIST // NO GRADIENTS</span>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BRUTALIST MODAL FOR PROJECT ARCHITECTURE DETAILS (Zero Alert, Zero Gradient, 0px Radius) -->
+  <div id="project-modal" class="fixed inset-0 z-50 items-center hidden justify-center p-4 bg-ink/80">
+    <div class="w-full max-w-2xl bg-paper dark:bg-obsidian border-2 border-ink dark:border-paper brutal-shadow-accent overflow-hidden">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between px-5 py-3.5 bg-ink text-paper dark:bg-paper dark:text-ink font-mono text-xs font-bold uppercase">
+        <span id="modal-code">SPESIFIKASI PROYEK // 001</span>
+        <button id="close-modal-btn" type="button" class="px-2 py-0.5 bg-accent text-paper cursor-pointer">
+          TUTUP [X]
+        </button>
+      </div>
+
+      <!-- Modal Content -->
+      <div class="p-6 sm:p-8 space-y-5">
+        <div>
+          <span id="modal-year" class="font-mono text-xs text-accent font-bold uppercase">TAHUN: 2026</span>
+          <h3 id="modal-title" class="font-display text-2xl sm:text-3xl font-bold uppercase mt-1">
+            JUDUL PROYEK
+          </h3>
+        </div>
+
+        <p id="modal-desc" class="text-sm sm:text-base leading-relaxed">
+          Deskripsi lengkap proyek.
+        </p>
+
+        <div class="border-t-2 border-b-2 border-ink dark:border-paper py-4">
+          <h4 class="font-mono text-xs font-bold uppercase mb-3 text-accent">// SOROTAN TEKNIS &amp; DELIVERABLES:</h4>
+          <ul id="modal-highlights" class="space-y-2 font-mono text-xs sm:text-sm list-disc list-inside">
+          </ul>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div id="modal-tags" class="flex flex-wrap gap-2 font-mono text-xs font-bold uppercase"></div>
+          <button id="modal-done-btn" type="button" class="px-5 py-2.5 bg-ink text-paper dark:bg-paper dark:text-ink font-mono text-xs font-bold uppercase hover:bg-accent hover:text-paper transition-colors cursor-pointer">
+            SELESAI MEMBACA
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT: DARK MODE, PHOTO PREVIEW, FILTERING, MODAL & CLIPBOARD -->
+  <script>
+    // 1. DARK MODE TOGGLE WITH LOCALSTORAGE PERSISTENCE
+    const htmlEl = document.documentElement;
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const themeLabel = document.getElementById('theme-label');
+
+    function applyTheme(isDark) {
+      if (isDark) {
+        htmlEl.classList.add('dark');
+        themeLabel.textContent = 'GELAP';
+      } else {
+        htmlEl.classList.remove('dark');
+        themeLabel.textContent = 'TERANG';
+      }
+    }
+
+    // Initialize theme from localStorage or system preference
+    const savedTheme = localStorage.getItem('malvin_theme');
+    if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      applyTheme(true);
+    } else {
+      applyTheme(false);
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+      const isCurrentlyDark = htmlEl.classList.contains('dark');
+      const nextDark = !isCurrentlyDark;
+      applyTheme(nextDark);
+      localStorage.setItem('malvin_theme', nextDark ? 'dark' : 'light');
+    });
+
+    // 2. MOBILE MENU TOGGLE
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileNav = document.getElementById('mobile-nav');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isHidden = mobileNav.classList.contains('hidden');
+      mobileNav.classList.toggle('hidden');
+      mobileMenuBtn.textContent = isHidden ? 'TUTUP [-]' : 'MENU [+]';
+    });
+
+    mobileLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileNav.classList.add('hidden');
+        mobileMenuBtn.textContent = 'MENU [+]';
+      });
+    });
+
+    // 3. PROFILE PHOTO UPLOAD & LIVE PREVIEW
+    const photoInput = document.getElementById('photo-upload-input');
+    const photoImg = document.getElementById('profile-photo-img');
+    const photoPlaceholder = document.getElementById('profile-photo-placeholder');
+    const photoResetBtn = document.getElementById('photo-reset-btn');
+
+    photoInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        photoImg.src = event.target.result;
+        photoImg.classList.remove('hidden');
+        photoPlaceholder.classList.add('hidden');
+        photoResetBtn.classList.remove('hidden');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    photoResetBtn.addEventListener('click', () => {
+      photoInput.value = '';
+      photoImg.src = '';
+      photoImg.classList.add('hidden');
+      photoPlaceholder.classList.remove('hidden');
+      photoResetBtn.classList.add('hidden');
+    });
+
+    // 4. PROJECT CATEGORY FILTERING
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        // Update button styles
+        filterBtns.forEach(b => {
+          b.classList.remove('bg-accent', 'text-paper');
+        });
+        btn.classList.add('bg-accent', 'text-paper');
+
+        const filter = btn.getAttribute('data-filter');
+        projectCards.forEach(card => {
+          const categories = card.getAttribute('data-category');
+          if (filter === 'all' || categories.includes(filter)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+      });
+    });
+
+    // 5. PROJECT ARCHITECTURE DETAIL MODAL
+    const projectsData = [
+      {
+        code: 'SPESIFIKASI PROYEK // 001',
+        year: 'TAHUN: 2025',
+        title: 'KINETIC PULSE — API GATEWAY & ANALYTICS MONITOR',
+        desc: 'Sistem agregasi metrik API real-time yang dirancang untuk menangani ribuan permintaan per detik dengan overhead minimal. Menggabungkan kecepatan edge-ready Hono dan reaktivitas React + Vite.',
+        highlights: [
+          'Middleware rate-limiting dan validasi skema tipe ketat di Hono.',
+          'Dashboard streaming log real-time menggunakan React dan Vite tanpa lag.',
+          'Alur deployment terotomasi dengan branching strategy berbasis Git.'
+        ],
+        tags: ['HONO', 'REACT', 'VITE', 'GIT']
+      },
+      {
+        code: 'SPESIFIKASI PROYEK // 002',
+        year: 'TAHUN: 2025',
+        title: 'LOGISTIK CORE — SISTEM ERP & MANAJEMEN INVENTARIS',
+        desc: 'Aplikasi manajemen rantai pasok dan stok multi-gudang untuk operasional distribusi. Mengintegrasikan logika bisnis kompleks Laravel dengan antarmuka admin Vue yang cepat dan responsif.',
+        highlights: [
+          'Pelacakan mutasi barang real-time dengan audit trail lengkap di Laravel.',
+          'Antarmuka tabel data padat dan pencarian instan berbasis Vue + Vite.',
+          'Optimasi indeks basis data untuk mempercepat pembuatan laporan bulanan hingga 65%.'
+        ],
+        tags: ['LARAVEL', 'VUE', 'VITE', 'GIT']
+      },
+      {
+        code: 'SPESIFIKASI PROYEK // 003',
+        year: 'TAHUN: 2025',
+        title: 'NEXUS VENDOR — PORTAL PENGADAAN & KATALOG B2B',
+        desc: 'Platform transaksi B2B berskala besar dengan arsitektur Server-Side Rendering (SSR) Next.js untuk performa pemuatan halaman seketika dan manajemen pesanan grosir terstruktur.',
+        highlights: [
+          'Rendering hibrida SSR/ISR menggunakan Next.js App Router dan React.',
+          'Sistem penetapan harga bertingkat (tiered pricing) otomatis per akun vendor.',
+          'Kolaborasi multi-developer terstruktur dengan code review ketat via Git.'
+        ],
+        tags: ['NEXT.JS', 'REACT', 'GIT']
+      },
+      {
+        code: 'SPESIFIKASI PROYEK // 004',
+        year: 'TAHUN: 2024',
+        title: 'ARUS PAY — AUTOMASI TAGIHAN & REKONSILIASI WEBHOOK',
+        desc: 'Infrastruktur penagihan berulang dan pemrosesan webhook pembayaran otomatis. Memanfaatkan Hono sebagai penerima webhook berlatensi rendah dan Laravel untuk pemrosesan antrean latar belakang.',
+        highlights: [
+          'Verifikasi tanda tangan kriptografis webhook instan pada layer Hono.',
+          'Sistem retry queue idempoten di Laravel untuk menjamin konsistensi saldo.',
+          'Panel pemantauan transaksi dan ekspor laporan keuangan menggunakan Vue.'
+        ],
+        tags: ['LARAVEL', 'HONO', 'VUE', 'GIT']
+      }
+    ];
+
+    const projectModal = document.getElementById('project-modal');
+    const closeModalBtn = document.getElementById('close-modal-btn');
+    const modalDoneBtn = document.getElementById('modal-done-btn');
+
+    function openProjectModal(index) {
+      const data = projectsData[index];
+      if (!data) return;
+
+      document.getElementById('modal-code').textContent = data.code;
+      document.getElementById('modal-year').textContent = data.year;
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-desc').textContent = data.desc;
+
+      const highlightsEl = document.getElementById('modal-highlights');
+      highlightsEl.innerHTML = data.highlights.map(item => `<li>${item}</li>`).join('');
+
+      const tagsEl = document.getElementById('modal-tags');
+      tagsEl.innerHTML = data.tags.map(tag => `<span class="px-2.5 py-1 border border-ink dark:border-paper">${tag}</span>`).join('');
+
+      projectModal.classList.remove('hidden');
+      projectModal.classList.add('flex');
+    }
+
+    function closeProjectModal() {
+      projectModal.classList.add('hidden');
+      projectModal.classList.remove('flex');
+    }
+
+    closeModalBtn.addEventListener('click', closeProjectModal);
+    modalDoneBtn.addEventListener('click', closeProjectModal);
+    projectModal.addEventListener('click', (e) => {
+      if (e.target === projectModal) closeProjectModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !projectModal.classList.contains('hidden')) {
+        closeProjectModal();
+      }
+    });
+
+    // 6. COPY EMAIL TO CLIPBOARD (Using document.execCommand for iframe compatibility)
+    const copyEmailBtn = document.getElementById('copy-email-btn');
+    const emailText = document.getElementById('email-text').textContent.trim();
+
+    copyEmailBtn.addEventListener('click', () => {
+      const tempInput = document.createElement('textarea');
+      tempInput.value = emailText;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      try {
+        document.execCommand('copy');
+        const originalText = copyEmailBtn.textContent;
+        copyEmailBtn.textContent = 'TERSALIN [OK]';
+        copyEmailBtn.classList.remove('bg-accent');
+        copyEmailBtn.classList.add('bg-ink', 'dark:bg-paper', 'dark:text-ink');
+        
+        setTimeout(() => {
+          copyEmailBtn.textContent = originalText;
+          copyEmailBtn.classList.add('bg-accent');
+          copyEmailBtn.classList.remove('bg-ink', 'dark:bg-paper', 'dark:text-ink');
+        }, 2000);
+      } catch (err) {
+        copyEmailBtn.textContent = 'SALIN MANUAL';
+      }
+      document.body.removeChild(tempInput);
+    });
+  </script>
+</body>
+</html>
